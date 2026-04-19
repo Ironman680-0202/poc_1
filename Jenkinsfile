@@ -46,7 +46,7 @@ pipeline {
 
         stage('Run Container') {
             steps {
-                sh 'docker run -d -p 8080:8080 $DOCKER_IMAGE:latest'
+                sh 'docker run -d -p 8081:8080 $DOCKER_IMAGE:latest'
             }
         }
     }
