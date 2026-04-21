@@ -56,7 +56,7 @@ pipeline {
             steps {
                 sh '''
                 docker rm -f java-app || true
-                docker run -d -p 8081:8080 $DOCKER_IMAGE:latest
+                docker run -d -p 8081:8080 --name java-app $DOCKER_IMAGE:latest
                 '''
             }
         }
