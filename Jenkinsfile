@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = "sandeep680/java-app"
+        DOCKER_IMAGE = "sandeep680/poc_1"
     }
 
     stages {
@@ -26,14 +26,14 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=POC_1'
+                    sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=poc_1'
                 }
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $DOCKER_IMAGE:latest .'
+                sh 'docker build -t sandeep680/poc_1:latest .'
             }
         }
 
@@ -46,7 +46,7 @@ pipeline {
                 )]) {
                     sh '''
                     docker login -u $USER -p $PASS
-                    docker push $DOCKER_IMAGE:latest
+                    docker push sandeep680/poc_1:latest
                     '''
                 }
             }
@@ -55,8 +55,8 @@ pipeline {
         stage('Run Container') {
             steps {
                 sh '''
-                docker rm -f java-app || true
-                docker run -d -p 8081:8080 --name java-app $DOCKER_IMAGE:latest
+                docker rm -f poc_1 || true
+                docker run -d -p 8081:8080 --name poc_1 sandeep680/poc_1:latest
                 '''
             }
         }
